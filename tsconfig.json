@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"jsx": "react-jsx",
+		"jsxImportSource": "hono/jsx",
+		"baseUrl": ".",
+		"paths": {
+			"@controllers/*": ["src/controllers/*"],
+			"@configs/*": ["src/configs/*"],
+			"@routes/*": ["src/routes/*"]
+
+			// "@models/*": ["src/models/*"],
+			// "@routes/*": ["src/routes/*"],
+			// "@middlewares/*": ["src/middlewares/*"],
+			// "@utils/*": ["src/utils/*"],
+			// "@services/*": ["src/services/*"],
+			// "@config/*": ["src/config/*"],
+			// "@types/*": ["src/types/*"]
+		}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist"]
+}
