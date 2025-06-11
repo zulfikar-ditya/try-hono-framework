@@ -10,7 +10,11 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
-		"hono": "^4.7.11"
+		"@hono/zod-validator": "^0.7.0",
+		"@prisma/client": "^6.9.0",
+		"hono": "^4.7.11",
+		"prisma": "^6.9.0",
+		"zod": "^3.25.58"
 	},
 	"devDependencies": {
 		"@types/bun": "latest",

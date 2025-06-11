@@ -9,7 +9,7 @@ dist/
 coverage/
 
 # misc
-.vscode/
+# .vscode/
 
 # logs
 npm-debug.log*
@@ -24,3 +24,5 @@ npm-debug.log*
 .env.test
 .env.production
 
+
+/generated/prisma
