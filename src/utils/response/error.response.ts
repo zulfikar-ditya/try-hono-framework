@@ -19,7 +19,9 @@ export const errorResponse = (
 export const validationErrorResponse = (
 	c: Context,
 	message: string = "Validation error",
-	errors: { field: string; message: string[] }[],
+	errors: {
+		[key: string]: string[];
+	},
 	code: ContentfulStatusCode = 422,
 ) => {
 	return c.json(

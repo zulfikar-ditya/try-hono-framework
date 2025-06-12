@@ -2,6 +2,7 @@ import {
 	errorResponse,
 	successResponse,
 	validationErrorResponse,
+	ValidationUtils,
 } from "@utils/index";
 import { Context } from "hono";
 import { z } from "zod";
@@ -13,20 +14,28 @@ const loginSchema = z.object({
 
 export const AuthController = {
 	singIn: async (c: Context) => {
-		const body = await c.req.json();
+		try {
+			const body = await c.req.json();
 
-		const validation = await loginSchema.safeParse(body);
-		if (!validation.success) {
-			return c.json(
-				{
-					status: false,
-					message: "Validation error",
-					errors: validation.error.issues,
-				},
-				422,
-			);
+			const validation = loginSchema.safeParse(body);
+			if (!validation.success) {
+				const transformedErrors = ValidationUtils.transformValidationErrors(
+					validation.error,
+				);
+				return validationErrorResponse(
+					c,
+					transformedErrors.message,
+					transformedErrors.errors,
+				);
+			}
+
+			return successResponse(c, null, "Sign in successful", 200);
+		} catch (error) {
+			if (error instanceof SyntaxError) {
+				return errorResponse(c, "Invalid JSON format", 400);
+			}
+
+			return errorResponse(c, "Internal server error", 500);
 		}
-
-		return successResponse(c, body, "Sign in successful", 200);
 	},
 };

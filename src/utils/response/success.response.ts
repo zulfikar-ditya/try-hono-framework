@@ -3,7 +3,7 @@ import { ContentfulStatusCode } from "hono/utils/http-status";
 
 export const successResponse = (
 	c: Context,
-	data: any,
+	data: object | null = null,
 	message: string = "Success",
 	code: ContentfulStatusCode = 200,
 ) => {
@@ -19,7 +19,7 @@ export const successResponse = (
 
 export const successResponseWithPagination = (
 	c: Context,
-	data: any,
+	data: object | null,
 	total: number,
 	page: number,
 	limit: number,
