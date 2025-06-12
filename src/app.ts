@@ -1,10 +1,12 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { corsConfig } from "@configs/index";
+import { corsConfig, isProduction } from "@configs/index";
 import routes from "@routes/index";
 import { HTTPException } from "hono/http-exception";
-import { AuthService } from "@services/auth/auth.service";
+import { DateUtils, LoggerUtils } from "@utils/index";
+import { AuthService } from "@services/index";
+import { ContentfulStatusCode } from "hono/utils/http-status";
 
 const app: Hono = new Hono();
 
@@ -29,7 +31,7 @@ app.use("*", async (c, next) => {
 
 // Error handling=====================================================
 app.onError((err, c) => {
-	if (err instanceof HTTPException) {
+	if (err instanceof HTTPException && err.status === 422) {
 		return c.json(
 			{
 				status: false,
@@ -41,12 +43,23 @@ app.onError((err, c) => {
 		);
 	}
 
+	const requestContext = {
+		method: c.req.method,
+		url: c.req.url,
+		userAgent: c.req.header("user-agent"),
+		ip:
+			c.req.header("x-forwarded-for") || c.req.header("x-real-ip") || "unknown",
+		timestamp: DateUtils.now().toISOString(),
+	};
+
+	LoggerUtils.error("Internal Server Error", err, requestContext);
+
 	return c.json(
 		{
 			status: false,
 			message: "Internal server error",
 			errors: [],
-			trace: err instanceof Error ? err.stack : undefined,
+			trace: err instanceof Error && !isProduction ? err.stack : undefined,
 			data: null,
 		},
 		500,

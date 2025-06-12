@@ -12,7 +12,7 @@ export function AccessTokenRepository(tx?: Prisma.TransactionClient) {
 			return await db.accessToken.create({
 				data: {
 					userId,
-					token: StrUtils.random(255),
+					token: StrUtils.random(100),
 					expiresAt: remember ? accessTokenLifetime : null,
 				},
 			});

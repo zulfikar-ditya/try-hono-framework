@@ -7,7 +7,7 @@ import {
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
-import { AuthService } from "@services/auth/auth.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 
 const loginSchema = z.object({
 	email: z.string().email().nonempty(),
@@ -42,12 +42,7 @@ export const AuthController = {
 			if (error instanceof SyntaxError) {
 				return errorResponse(c, "Invalid JSON format", 400);
 			}
-
-			if (error instanceof HTTPException) {
-				throw error;
-			}
-
-			return errorResponse(c, "Internal server error", 500);
+			throw error;
 		}
 	},
 };

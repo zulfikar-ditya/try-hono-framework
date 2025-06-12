@@ -1,5 +1,5 @@
-import { AuthController } from "@controllers/auth/auth.controller";
-import { healthController } from "@controllers/health.controller";
+import { AuthController } from "src/app/controllers/auth/auth.controller";
+import { healthController } from "src/app/controllers/health.controller";
 import { Hono } from "hono";
 
 const routes = new Hono();

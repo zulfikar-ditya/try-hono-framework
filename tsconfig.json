@@ -29,13 +29,14 @@
 		"types": ["bun-types"],
 
 		"paths": {
-			"@controllers/*": ["src/controllers/*"],
+			"@controllers/*": ["src/app/controllers/*"],
 			"@configs/*": ["src/configs/*"],
 			"@routes/*": ["src/routes/*"],
 			"@utils/*": ["src/utils/*"],
-			"@repositories/*": ["src/repositories/*"],
-			"@services/*": ["src/services/*"],
-			"@types/*": ["src/types/*"]
+			"@repositories/*": ["src/app/repositories/*"],
+			"@services/*": ["src/app/services/*"],
+			"@types/*": ["src/types/*"],
+			"@logger/*": ["src/utils/logger/*"]
 
 			// "@models/*": ["src/models/*"],
 			// "@routes/*": ["src/routes/*"],

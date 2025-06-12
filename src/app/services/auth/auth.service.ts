@@ -4,7 +4,7 @@ import {
 	prisma,
 	UserRepository,
 } from "@repositories/index";
-import { HashUtils } from "@utils/index";
+import { EncryptionUtils, HashUtils } from "@utils/index";
 import { HTTPException } from "hono/http-exception";
 
 export class AuthService {
@@ -31,7 +31,11 @@ export class AuthService {
 					});
 				}
 
-				if (user.password !== password) {
+				const isPasswordValid = await HashUtils.compareHash(
+					password,
+					user.password,
+				);
+				if (isPasswordValid === false) {
 					throw new HTTPException(422, {
 						message: "Invalid email or password",
 						cause: {
@@ -45,7 +49,7 @@ export class AuthService {
 					false,
 				);
 
-				const HashToken = await HashUtils.generateHash(accessToken.token);
+				const HashToken = await EncryptionUtils.encrypt(accessToken.token);
 
 				return {
 					id: user.id,
