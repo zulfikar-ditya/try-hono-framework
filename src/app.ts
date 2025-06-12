@@ -4,6 +4,7 @@ import { logger } from "hono/logger";
 import { corsConfig } from "@configs/index";
 import routes from "@routes/index";
 import { HTTPException } from "hono/http-exception";
+import { AuthService } from "@services/auth/auth.service";
 
 const app: Hono = new Hono();
 
@@ -20,7 +21,13 @@ app.use(
 	}),
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Bind services to context===========================================
+app.use("*", async (c, next) => {
+	c.set("authService", new AuthService());
+	await next();
+});
+
+// Error handling=====================================================
 app.onError((err, c) => {
 	if (err instanceof HTTPException) {
 		return c.json(

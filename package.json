@@ -12,6 +12,8 @@
 	"dependencies": {
 		"@hono/zod-validator": "^0.7.0",
 		"@prisma/client": "^6.9.0",
+		"bcryptjs": "^3.0.2",
+		"dayjs": "^1.11.13",
 		"hono": "^4.7.11",
 		"prisma": "^6.9.0",
 		"zod": "^3.25.58"

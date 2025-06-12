@@ -6,6 +6,8 @@ type ConfigType = {
 	APP_SECRET: string;
 	APP_ENV: string;
 	APP_HOST: string;
+	APP_TIMEZONE: string;
+	SERVER_TIMEZONE: string;
 };
 
 type CorsConfigType = {
@@ -25,6 +27,8 @@ export const config: ConfigType = {
 	APP_SECRET: process.env.APP_SECRET || "default_secret",
 	APP_ENV: process.env.APP_ENV || "development",
 	APP_HOST: process.env.APP_HOST || "localhost",
+	APP_TIMEZONE: process.env.APP_TIMEZONE || "UTC",
+	SERVER_TIMEZONE: process.env.SERVER_TIMEZONE || "UTC",
 };
 
 export const corsConfig: CorsConfigType = {

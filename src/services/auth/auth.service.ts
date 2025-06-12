@@ -1,5 +1,10 @@
 import { Prisma } from "@prisma/client";
-import { prisma, UserRepository } from "@repositories/index";
+import {
+	AccessTokenRepository,
+	prisma,
+	UserRepository,
+} from "@repositories/index";
+import { HashUtils } from "@utils/index";
 import { HTTPException } from "hono/http-exception";
 
 export class AuthService {
@@ -11,7 +16,7 @@ export class AuthService {
 		user: {
 			id: string;
 			email: string;
-			name: string;
+			name: string | null;
 		};
 	}> {
 		const data = await prisma.$transaction(
@@ -35,12 +40,24 @@ export class AuthService {
 					});
 				}
 
-				return user;
+				const accessToken = await AccessTokenRepository(tx).createToken(
+					user.id,
+					false,
+				);
+
+				const HashToken = await HashUtils.generateHash(accessToken.token);
+
+				return {
+					id: user.id,
+					email: user.email,
+					name: user.name,
+					accessToken: HashToken,
+				};
 			},
 		);
 
 		return {
-			token: "generated_token",
+			token: data.accessToken,
 			user: {
 				id: data.id,
 				email: data.email,

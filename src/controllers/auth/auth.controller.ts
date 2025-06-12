@@ -7,6 +7,7 @@ import {
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
+import { AuthService } from "@services/auth/auth.service";
 
 const loginSchema = z.object({
 	email: z.string().email().nonempty(),
@@ -30,9 +31,13 @@ export const AuthController = {
 				);
 			}
 
-			const service = c.get("authService");
+			const authService: AuthService = c.get("authService");
+			const result = await authService.login(
+				validation.data.email,
+				validation.data.password,
+			);
 
-			return successResponse(c, null, "Sign in successful", 200);
+			return successResponse(c, result, "Sign in successful", 200);
 		} catch (error) {
 			if (error instanceof SyntaxError) {
 				return errorResponse(c, "Invalid JSON format", 400);

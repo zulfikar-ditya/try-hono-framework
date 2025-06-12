@@ -12,7 +12,7 @@ export function UserRepository(tx?: Prisma.TransactionClient) {
 		): Promise<{
 			id: string;
 			email: string;
-			name: string;
+			name: string | null;
 			password: string;
 		} | null> => {
 			return await db.user.findUnique({
