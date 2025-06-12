@@ -6,7 +6,6 @@ import routes from "@routes/index";
 import { HTTPException } from "hono/http-exception";
 import { DateUtils, LoggerUtils } from "@utils/index";
 import { AuthService } from "@services/index";
-import { ContentfulStatusCode } from "hono/utils/http-status";
 
 const app: Hono = new Hono();
 

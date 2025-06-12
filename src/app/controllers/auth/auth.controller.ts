@@ -5,7 +5,6 @@ import {
 	ValidationUtils,
 } from "@utils/index";
 import { Context } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { AuthService } from "src/app/services/auth/auth.service";
 

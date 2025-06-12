@@ -49,7 +49,7 @@ export class AuthService {
 					false,
 				);
 
-				const HashToken = await EncryptionUtils.encrypt(accessToken.token);
+				const HashToken = EncryptionUtils.encrypt(accessToken.token);
 
 				return {
 					id: user.id,

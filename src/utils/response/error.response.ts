@@ -1,6 +1,6 @@
+import { LoggerUtils } from "@utils/logger/logger.utils";
 import { Context } from "hono";
 import { ContentfulStatusCode } from "hono/utils/http-status";
-import { LoggerUtils } from "../logger/logger.utils";
 
 export const errorResponse = (
 	c: Context,
@@ -33,13 +33,6 @@ export const validationErrorResponse = (
 	},
 	code: ContentfulStatusCode = 422,
 ) => {
-	const requestContext = {
-		method: c.req.method,
-		url: c.req.url,
-		statusCode: code,
-		validationErrors: errors,
-	};
-
 	return c.json(
 		{
 			status: false,

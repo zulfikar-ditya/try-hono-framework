@@ -38,7 +38,11 @@ export default tseslint.config(
 
 			indent: ["error", "tab", { SwitchCase: 1 }],
 			"linebreak-style": ["error", "unix"],
-			quotes: ["error", "double", { avoidEscape: true }],
+			quotes: [
+				"error",
+				"double",
+				{ avoidEscape: true, allowTemplateLiterals: true },
+			],
 			semi: ["error", "always"],
 
 			"no-unused-expressions": "error",

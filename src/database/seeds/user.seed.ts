@@ -33,6 +33,6 @@ export async function seedUsers() {
 			},
 		});
 	}
-
+	// eslint-disable-next-line
 	console.log("Users seeded successfully");
 }
