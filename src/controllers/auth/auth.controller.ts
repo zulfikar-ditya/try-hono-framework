@@ -5,6 +5,7 @@ import {
 	ValidationUtils,
 } from "@utils/index";
 import { Context } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -29,10 +30,16 @@ export const AuthController = {
 				);
 			}
 
+			const service = c.get("authService");
+
 			return successResponse(c, null, "Sign in successful", 200);
 		} catch (error) {
 			if (error instanceof SyntaxError) {
 				return errorResponse(c, "Invalid JSON format", 400);
+			}
+
+			if (error instanceof HTTPException) {
+				throw error;
 			}
 
 			return errorResponse(c, "Internal server error", 500);

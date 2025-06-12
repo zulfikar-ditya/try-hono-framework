@@ -32,7 +32,10 @@
 			"@controllers/*": ["src/controllers/*"],
 			"@configs/*": ["src/configs/*"],
 			"@routes/*": ["src/routes/*"],
-			"@utils/*": ["src/utils/*"]
+			"@utils/*": ["src/utils/*"],
+			"@repositories/*": ["src/repositories/*"],
+			"@services/*": ["src/services/*"],
+			"@types/*": ["src/types/*"]
 
 			// "@models/*": ["src/models/*"],
 			// "@routes/*": ["src/routes/*"],
