@@ -1,5 +1,6 @@
 import { AccessTokenRepository } from "@repositories/access-token.repository";
 import { prisma, UserRepository } from "@repositories/index";
+import { CacheService } from "@services/cache/cache.service";
 import { DateUtils, EncryptionUtils } from "@utils/index";
 import { Context, Next } from "hono";
 import { createMiddleware } from "hono/factory";
@@ -50,13 +51,13 @@ export const authMiddleware = createMiddleware(
 			return accessToken;
 		});
 
-		// Store the access token in the context
-		const user = await UserRepository().findByUserId(accessTokenData.userId);
-		if (!user) {
-			throw new HTTPException(401, {
-				message: "User not found",
-			});
-		}
+		const user = await CacheService.remember(
+			`user:${accessTokenData.userId}`,
+			async () => {
+				return UserRepository().findByUserId(accessTokenData.userId);
+			},
+			3600,
+		);
 
 		c.set("user", user);
 

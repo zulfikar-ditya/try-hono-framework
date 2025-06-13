@@ -37,7 +37,8 @@
 			"@services/*": ["src/app/services/*"],
 			"@appTypes/*": ["src/types/*"],
 			"@logger/*": ["src/utils/logger/*"],
-			"@middlewares/*": ["src/app/middlewares/*"]
+			"@middlewares/*": ["src/app/middlewares/*"],
+			"@errors/*": ["src/app/errors/*"]
 		}
 	},
 	"include": ["src/**/*"],

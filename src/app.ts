@@ -1,11 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { corsConfig, isProduction } from "@configs/index";
+import { corsConfig } from "@configs/index";
 import routes from "@routes/index";
-import { HTTPException } from "hono/http-exception";
-import { DateUtils, LoggerUtils } from "@utils/index";
 import { AuthService } from "@services/index";
+import { registerException } from "@errors/exception";
 
 const app: Hono = new Hono();
 
@@ -29,53 +28,7 @@ app.use("*", async (c, next) => {
 });
 
 // Error handling=====================================================
-app.onError((err, c) => {
-	if (err instanceof HTTPException && err.status === 422) {
-		return c.json(
-			{
-				status: false,
-				message: err.message,
-				errors: err.cause || [],
-				data: null,
-			},
-			422,
-		);
-	}
-
-	if (err instanceof HTTPException) {
-		return c.json(
-			{
-				status: false,
-				message: err.message,
-				errors: [],
-				data: null,
-			},
-			err.status,
-		);
-	}
-
-	const requestContext = {
-		method: c.req.method,
-		url: c.req.url,
-		userAgent: c.req.header("user-agent"),
-		ip:
-			c.req.header("x-forwarded-for") || c.req.header("x-real-ip") || "unknown",
-		timestamp: DateUtils.now().toISOString(),
-	};
-
-	LoggerUtils.error("Internal Server Error", err, requestContext);
-
-	return c.json(
-		{
-			status: false,
-			message: "Internal server error",
-			errors: [],
-			trace: err instanceof Error && !isProduction ? err.stack : undefined,
-			data: null,
-		},
-		500,
-	);
-});
+registerException(app);
 
 app.route("/", routes);
 
