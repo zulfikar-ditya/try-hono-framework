@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from ".";
+import { UserInformation } from "@appTypes/repositories";
 
 export function UserRepository(tx?: Prisma.TransactionClient) {
 	const db = tx || prisma;
@@ -22,6 +23,19 @@ export function UserRepository(tx?: Prisma.TransactionClient) {
 					email: true,
 					name: true,
 					password: true,
+				},
+			});
+		},
+
+		findByUserId: async (userId: string): Promise<UserInformation | null> => {
+			return await db.user.findUnique({
+				where: { id: userId },
+				select: {
+					id: true,
+					email: true,
+					name: true,
+					createdAt: true,
+					updatedAt: true,
 				},
 			});
 		},

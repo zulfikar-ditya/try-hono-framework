@@ -35,16 +35,9 @@
 			"@utils/*": ["src/utils/*"],
 			"@repositories/*": ["src/app/repositories/*"],
 			"@services/*": ["src/app/services/*"],
-			"@types/*": ["src/types/*"],
-			"@logger/*": ["src/utils/logger/*"]
-
-			// "@models/*": ["src/models/*"],
-			// "@routes/*": ["src/routes/*"],
-			// "@middlewares/*": ["src/middlewares/*"],
-			// "@utils/*": ["src/utils/*"],
-			// "@services/*": ["src/services/*"],
-			// "@config/*": ["src/config/*"],
-			// "@types/*": ["src/types/*"]
+			"@appTypes/*": ["src/types/*"],
+			"@logger/*": ["src/utils/logger/*"],
+			"@middlewares/*": ["src/app/middlewares/*"]
 		}
 	},
 	"include": ["src/**/*"],

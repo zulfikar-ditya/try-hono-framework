@@ -1,3 +1,5 @@
+import { UserInformation } from "@appTypes/repositories";
+import { AuthService } from "@services/index";
 import {
 	errorResponse,
 	successResponse,
@@ -6,7 +8,6 @@ import {
 } from "@utils/index";
 import { Context } from "hono";
 import { z } from "zod";
-import { AuthService } from "src/app/services/auth/auth.service";
 
 const loginSchema = z.object({
 	email: z.string().email().nonempty(),
@@ -43,5 +44,14 @@ export const AuthController = {
 			}
 			throw error;
 		}
+	},
+
+	profile: (c: Context) => {
+		const user: UserInformation = c.get("user");
+		if (!user) {
+			return errorResponse(c, "User not found", 404);
+		}
+
+		return successResponse(c, user, "User profile retrieved successfully", 200);
 	},
 };

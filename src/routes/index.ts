@@ -1,5 +1,6 @@
-import { AuthController } from "src/app/controllers/auth/auth.controller";
-import { healthController } from "src/app/controllers/health.controller";
+import { AuthController } from "@controllers/auth/auth.controller";
+import { healthController } from "@controllers/health.controller";
+import { authMiddleware } from "@middlewares/auth.middleware";
 import { Hono } from "hono";
 
 const routes = new Hono();
@@ -15,5 +16,7 @@ routes.get("/", (c) => {
 routes.get("/health", healthController.getHealth);
 
 routes.post("auth/signin", AuthController.singIn);
+
+routes.get("profile", authMiddleware, AuthController.profile);
 
 export default routes;

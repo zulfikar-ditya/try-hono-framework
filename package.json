@@ -2,7 +2,7 @@
 	"name": "hono-app",
 	"scripts": {
 		"dev": "bun run --hot src/index.ts",
-		"build": "bun build src/index.ts --outdir dist",
+		"build": "bun build src/index.ts --outdir dist --target bun",
 		"start": "bun run dist/index.js",
 		"seed": "bun run src/database/index.ts",
 		"lint": "eslint 'src/**/*.{js,ts}'",

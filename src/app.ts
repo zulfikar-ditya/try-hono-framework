@@ -42,6 +42,18 @@ app.onError((err, c) => {
 		);
 	}
 
+	if (err instanceof HTTPException) {
+		return c.json(
+			{
+				status: false,
+				message: err.message,
+				errors: [],
+				data: null,
+			},
+			err.status,
+		);
+	}
+
 	const requestContext = {
 		method: c.req.method,
 		url: c.req.url,
