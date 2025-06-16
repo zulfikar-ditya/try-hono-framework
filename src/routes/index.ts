@@ -15,7 +15,10 @@ routes.get("/", (c) => {
 });
 routes.get("/health", healthController.getHealth);
 
-routes.post("auth/signin", AuthController.singIn);
+routes.post("auth/signin", AuthController.signIn);
+routes.post("auth/signup", AuthController.signUp);
+routes.post("auth/verify-email", AuthController.verifyEmail);
+routes.post("auth/resend-verification", AuthController.resendEmailVerification);
 
 routes.get("profile", authMiddleware, AuthController.profile);
 

@@ -7,6 +7,7 @@ type ConfigType = {
 	APP_ENV: string;
 	APP_HOST: string;
 	APP_TIMEZONE: string;
+	APP_CLIENT_URL: string;
 	SERVER_TIMEZONE: string;
 };
 
@@ -19,6 +20,7 @@ export const config: ConfigType = {
 	APP_ENV: process.env.APP_ENV || "development",
 	APP_HOST: process.env.APP_HOST || "localhost",
 	APP_TIMEZONE: process.env.APP_TIMEZONE || "UTC",
+	APP_CLIENT_URL: process.env.APP_CLIENT_URL || "http://localhost:3000",
 	SERVER_TIMEZONE: process.env.SERVER_TIMEZONE || "UTC",
 };
 
